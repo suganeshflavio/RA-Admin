@@ -162,21 +162,23 @@ const App: React.FC = () => {
           alignItems: "center",
           justifyContent: "center",
           padding: "16px",
-          borderBottom: "1px solid rgba(200, 138, 38, 0.2)",
-          background: "linear-gradient(180deg, #092414 0%, #06180C 100%)",
+          borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+          background: "linear-gradient(180deg, #0A2244 0%, #071C3B 100%)",
         }}
       >
         <Image
-          src="/tks_academy_logo.png"
-          alt="TKS Academy logo"
+          src="/ramars_academy_emblem.png"
+          alt="Ramar's Academy logo"
           width={collapsed ? 44 : 64}
           height={collapsed ? 44 : 64}
-          preload
+          priority
           unoptimized
           style={{
             borderRadius: "50%",
-            border: "2px solid rgba(200, 138, 38, 0.4)",
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)",
+            border: "2px solid rgba(196, 44, 39, 0.4)",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.35)",
+            background: "#ffffff",
+            objectFit: "contain",
             transition: "all 0.3s ease",
           }}
         />
@@ -189,7 +191,7 @@ const App: React.FC = () => {
         items={items}
         selectedKeys={[selectedMenu]}
         style={{
-          background: "#06180C",
+          background: "#071C3B",
           border: "none",
           padding: "12px 6px",
         }}
@@ -207,8 +209,8 @@ const App: React.FC = () => {
           collapsed={collapsed}
           onCollapse={setCollapsed}
           style={{
-            background: "#06180C",
-            borderRight: "1px solid rgba(200, 138, 38, 0.15)",
+            background: "#071C3B",
+            borderRight: "1px solid rgba(255, 255, 255, 0.08)",
           }}
         >
           {SidebarContent}
@@ -222,10 +224,10 @@ const App: React.FC = () => {
           open={mobileOpen}
           onClose={() => setMobileOpen(false)}
           styles={{
-            body: { background: "#06180C", padding: 0 },
+            body: { background: "#071C3B", padding: 0 },
             header: {
-              background: "#06180C",
-              borderBottom: "1px solid rgba(200, 138, 38, 0.2)",
+              background: "#071C3B",
+              borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
             },
           }}
         >
@@ -236,18 +238,21 @@ const App: React.FC = () => {
               alignItems: "center",
               justifyContent: "center",
               padding: "16px",
-              borderBottom: "1px solid rgba(200, 138, 38, 0.2)",
+              borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
+              background: "linear-gradient(180deg, #0A2244 0%, #071C3B 100%)",
             }}
           >
             <Image
-              src="/tks_academy_logo.png"
-              alt="TKS Academy logo"
+              src="/ramars_academy_emblem.png"
+              alt="Ramar's Academy logo"
               width={56}
               height={56}
               unoptimized
               style={{
                 borderRadius: "50%",
-                border: "2px solid rgba(200, 138, 38, 0.4)",
+                border: "2px solid rgba(196, 44, 39, 0.4)",
+                background: "#ffffff",
+                objectFit: "contain",
               }}
             />
           </div>
@@ -256,7 +261,7 @@ const App: React.FC = () => {
             mode="inline"
             items={items}
             selectedKeys={[selectedMenu]}
-            style={{ background: "#06180C", border: "none", padding: "12px 6px" }}
+            style={{ background: "#071C3B", border: "none", padding: "12px 6px" }}
             onClick={({ key }) => {
               setSelectedMenu(key);
               setMobileOpen(false);
@@ -274,8 +279,8 @@ const App: React.FC = () => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            borderBottom: "1px solid #E5E7EB",
-            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)",
+            borderBottom: "1px solid #E2E8F0",
+            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.03)",
           }}
         >
           {/* Left Side */}
@@ -304,9 +309,9 @@ const App: React.FC = () => {
               <Avatar
                 icon={<UserOutlined />}
                 style={{
-                  backgroundColor: "#06180C",
-                  color: "#DDA035",
-                  border: "1px solid rgba(200, 138, 38, 0.4)",
+                  backgroundColor: "#071C3B",
+                  color: "#E53935",
+                  border: "1px solid rgba(196, 44, 39, 0.35)",
                 }}
               />
 

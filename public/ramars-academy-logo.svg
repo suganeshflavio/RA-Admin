@@ -1,0 +1,84 @@
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Ramar's Academy Logo</title>
+  <desc id="desc">Ramar's Academy NEET / JEE - Physics emblem</desc>
+  <defs>
+    <radialGradient id="navyGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0E2A54"/>
+      <stop offset="100%" stop-color="#071C3B"/>
+    </radialGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F5D061"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#AA7C11"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Circle -->
+  <circle cx="200" cy="200" r="192" fill="#FFFFFF" stroke="#071C3B" stroke-width="4"/>
+
+  <!-- Top Gear Teeth (Black) -->
+  <g fill="#0B1320">
+    <path d="M182 28h36v28h-36z"/>
+    <path d="M268 52l24 26-20 20-24-26z"/>
+    <path d="M332 118l12 34-26 10-12-34z"/>
+    <path d="M68 78l24-26 20 20-24 26z"/>
+    <path d="M28 152l12-34 26 10-12 34z"/>
+    <!-- Top Arc of Gear -->
+    <path d="M50 200 A150 150 0 0 1 350 200 L320 200 A120 120 0 0 0 80 200 Z"/>
+  </g>
+
+  <!-- Bottom Gear Teeth (Navy Blue) -->
+  <g fill="#071C3B">
+    <path d="M182 344h36v28h-36z"/>
+    <path d="M268 322l24-26 20 20-24 26z"/>
+    <path d="M332 248l12-34-26-10-12 34z"/>
+    <path d="M68 296l24 26-20 20-24-26z"/>
+    <path d="M28 214l12 34 26-10-12-34z"/>
+    <!-- Bottom Arc of Gear -->
+    <path d="M50 200 A150 150 0 0 0 350 200 L320 200 A120 120 0 0 1 80 200 Z"/>
+  </g>
+
+  <!-- Inner White Circle -->
+  <circle cx="200" cy="200" r="115" fill="#FFFFFF"/>
+
+  <!-- Golden Caduceus (Wings & Staff) -->
+  <g fill="url(#goldGrad)" stroke="#B8860B" stroke-width="0.75">
+    <!-- Staff -->
+    <circle cx="200" cy="115" r="10"/>
+    <rect x="197" y="125" width="6" height="135" rx="3"/>
+    <!-- Left Wing -->
+    <path d="M197 132 C175 110 130 115 125 142 C145 140 170 148 197 155 Z"/>
+    <path d="M197 142 C180 128 145 132 135 152 C155 150 175 156 197 162 Z"/>
+    <!-- Right Wing -->
+    <path d="M203 132 C225 110 270 115 275 142 C255 140 230 148 203 155 Z"/>
+    <path d="M203 142 C220 128 255 132 265 152 C245 150 225 156 203 162 Z"/>
+    <!-- Coiled Snakes -->
+    <path d="M197 160 Q180 175 200 190 Q220 205 200 220 Q180 235 200 250" fill="none" stroke="url(#goldGrad)" stroke-width="5" stroke-linecap="round"/>
+    <path d="M203 160 Q220 175 200 190 Q180 205 200 220 Q220 235 200 250" fill="none" stroke="url(#goldGrad)" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Left: Medical Student (Blue) -->
+  <g fill="#1E88E5">
+    <circle cx="160" cy="210" r="15"/>
+    <path d="M140 248 C140 230 150 225 160 225 C170 225 180 230 180 248 Z"/>
+    <!-- Stethoscope -->
+    <path d="M152 232 Q152 245 160 245 Q168 245 168 232" fill="none" stroke="#FFFFFF" stroke-width="2.5"/>
+  </g>
+
+  <!-- Right: Engineer Student (Navy & Gray) -->
+  <g fill="#071C3B">
+    <circle cx="240" cy="212" r="14"/>
+    <!-- Safety Hard Hat -->
+    <path d="M224 206 C224 195 231 192 240 192 C249 192 256 195 256 206 Z" fill="#E2E8F0" stroke="#071C3B" stroke-width="2"/>
+    <rect x="220" y="205" width="40" height="4" rx="2" fill="#CBD5E1"/>
+    <!-- Torso -->
+    <path d="M220 248 C220 232 230 227 240 227 C250 227 260 232 260 248 Z" fill="#334155"/>
+  </g>
+
+  <!-- Horizontal Wordmark: RAMAR'S (Left) ACADEMY (Right) -->
+  <text x="60" y="206" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="24" fill="#C42C27" letter-spacing="1.5">RAMAR'S</text>
+  <text x="248" y="206" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="24" fill="#C42C27" letter-spacing="1.5">ACADEMY</text>
+
+  <!-- Subtitle Bottom: NEET / JEE - PHYSICS -->
+  <text x="200" y="375" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="bold" font-size="20" fill="#071C3B" letter-spacing="2">NEET / JEE- PHYSICS</text>
+</svg>

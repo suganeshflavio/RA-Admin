@@ -55,7 +55,7 @@ export default function LoginPage() {
       style={{
         minHeight: "100vh",
         width:"100%",
-        background: "radial-gradient(ellipse at 50% 20%, #0F3820 0%, #07190D 60%, #030C06 100%)",
+        background: "radial-gradient(ellipse at 50% 20%, #0D264D 0%, #071C3B 55%, #030C19 100%)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -67,48 +67,48 @@ export default function LoginPage() {
           width: "100%",
           maxWidth: 420,
           borderRadius: 14,
-          border: "1px solid rgba(200, 138, 38, 0.25)",
-          borderTop: "4px solid #C88A26",
-          boxShadow: "0 24px 48px -12px rgba(0, 0, 0, 0.5)",
+          border: "1px solid rgba(196, 44, 39, 0.2)",
+          borderTop: "4px solid #C42C27",
+          boxShadow: "0 24px 48px -12px rgba(3, 12, 25, 0.65)",
           background: "#ffffff",
         }}
       >
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <div
             style={{
-              width: 84,
-              height: 84,
+              width: 96,
+              height: 96,
               margin: "0 auto 16px",
               borderRadius: "50%",
-              boxShadow: "0 8px 24px rgba(200, 138, 38, 0.3)",
-              border: "2px solid rgba(200, 138, 38, 0.4)",
+              boxShadow: "0 8px 24px rgba(7, 28, 59, 0.25), 0 0 0 2px rgba(196, 44, 39, 0.35)",
               overflow: "hidden",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              background: "#06180C",
+              background: "#ffffff",
             }}
           >
             <Image
-              src="/tks_academy_logo.png"
-              alt="TKS Academy logo"
-              width={84}
-              height={84}
+              src="/ramars_academy_emblem.png"
+              alt="Ramar's Academy logo"
+              width={96}
+              height={96}
+              priority
               unoptimized
               style={{
                 width: "100%",
                 height: "100%",
-                objectFit: "cover",
+                objectFit: "contain",
               }}
             />
           </div>
 
-          <Title level={3} style={{ margin: "0 0 4px", color: "#06180C", fontWeight: 700 }}>
-            TKS Academy
+          <Title level={3} style={{ margin: "0 0 4px", color: "#071C3B", fontWeight: 700 }}>
+            Ramar's Academy
           </Title>
 
-          <Text type="secondary" style={{ fontSize: 13 }}>
-            Admin Portal &bull; Sign in to continue
+          <Text type="secondary" style={{ fontSize: 13, color: "#64748B" }}>
+            NEET / JEE - Physics &bull; Admin Portal
           </Text>
         </div>
 
@@ -130,7 +130,7 @@ export default function LoginPage() {
           >
             <Input
               size="large"
-              placeholder="admin@tksacademy.com"
+              placeholder="admin@ramarsacademy.com"
               autoComplete="email"
             />
           </Form.Item>
@@ -163,9 +163,9 @@ export default function LoginPage() {
               fontWeight: 600,
               fontSize: 15,
               marginTop: 12,
-              background: "linear-gradient(135deg, #DDA035 0%, #C88A26 100%)",
+              background: "linear-gradient(135deg, #E53935 0%, #C42C27 100%)",
               border: "none",
-              boxShadow: "0 4px 14px rgba(200, 138, 38, 0.35)",
+              boxShadow: "0 4px 14px rgba(196, 44, 39, 0.35)",
             }}
           >
             Sign in

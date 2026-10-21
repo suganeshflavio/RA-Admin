@@ -17,8 +17,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tks Academy",
-  description: "Admin dashboard for Mentor",
+  title: "Ramar's Academy",
+  description: "Admin portal for Ramar's Academy - NEET / JEE Physics",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon.png", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-icon.png" }],
+  },
 };
 
 export default function RootLayout({
