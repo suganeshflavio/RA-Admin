@@ -54,8 +54,8 @@ export default function LoginPage() {
     <div
       style={{
         minHeight: "100vh",
-        width:"100%",
-        background: "radial-gradient(ellipse at 50% 20%, #0D264D 0%, #071C3B 55%, #030C19 100%)",
+        width: "100%",
+        background: "radial-gradient(ellipse at 50% 20%, #0F274A 0%, #071527 60%, #030B14 100%)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -67,33 +67,34 @@ export default function LoginPage() {
           width: "100%",
           maxWidth: 420,
           borderRadius: 14,
-          border: "1px solid rgba(196, 44, 39, 0.2)",
-          borderTop: "4px solid #C42C27",
-          boxShadow: "0 24px 48px -12px rgba(3, 12, 25, 0.65)",
+          border: "1px solid rgba(200, 35, 44, 0.25)",
+          borderTop: "4px solid #C8232C",
+          boxShadow: "0 24px 48px -12px rgba(0, 0, 0, 0.6)",
           background: "#ffffff",
         }}
       >
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <div
             style={{
-              width: 96,
-              height: 96,
+              width: 92,
+              height: 92,
               margin: "0 auto 16px",
               borderRadius: "50%",
-              boxShadow: "0 8px 24px rgba(7, 28, 59, 0.25), 0 0 0 2px rgba(196, 44, 39, 0.35)",
+              boxShadow: "0 8px 24px rgba(200, 35, 44, 0.25)",
+              border: "2px solid rgba(200, 35, 44, 0.35)",
               overflow: "hidden",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               background: "#ffffff",
+              padding: 4,
             }}
           >
             <Image
-              src="/ramars_academy_emblem.png"
+              src="/ramars_academy_icon.png"
               alt="Ramar's Academy logo"
-              width={96}
-              height={96}
-              priority
+              width={84}
+              height={84}
               unoptimized
               style={{
                 width: "100%",
@@ -103,12 +104,12 @@ export default function LoginPage() {
             />
           </div>
 
-          <Title level={3} style={{ margin: "0 0 4px", color: "#071C3B", fontWeight: 700 }}>
-            Ramar's Academy
+          <Title level={3} style={{ margin: "0 0 4px", color: "#071527", fontWeight: 700 }}>
+            Ramar&apos;s Academy
           </Title>
 
-          <Text type="secondary" style={{ fontSize: 13, color: "#64748B" }}>
-            NEET / JEE - Physics &bull; Admin Portal
+          <Text type="secondary" style={{ fontSize: 13 }}>
+            Admin Portal &bull; Sign in to continue
           </Text>
         </div>
 
@@ -163,9 +164,9 @@ export default function LoginPage() {
               fontWeight: 600,
               fontSize: 15,
               marginTop: 12,
-              background: "linear-gradient(135deg, #E53935 0%, #C42C27 100%)",
+              background: "linear-gradient(135deg, #DC2626 0%, #C8232C 100%)",
               border: "none",
-              boxShadow: "0 4px 14px rgba(196, 44, 39, 0.35)",
+              boxShadow: "0 4px 14px rgba(200, 35, 44, 0.35)",
             }}
           >
             Sign in

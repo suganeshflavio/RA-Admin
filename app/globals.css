@@ -103,68 +103,69 @@ body {
 }
 
 /* ==========================================
-   Ramar's Academy Brand Theme (Deep Navy, Crimson Red & Metallic Gold)
+   Ramar's Academy Brand Theme (Deep Navy & Academic Crimson Red)
    ========================================== */
 :root {
-  --brand-red: #C42C27;
-  --brand-red-hover: #D32F2F;
-  --brand-red-active: #9E1F1A;
-  --brand-red-light: #FEF2F2;
-  --brand-red-glow: rgba(196, 44, 39, 0.25);
-  --brand-navy-darkest: #040D1C;
-  --brand-navy-dark: #071C3B;
-  --brand-navy-medium: #0A244A;
-  --brand-navy-surface: #0E3264;
+  --brand-primary: #C8232C;
+  --brand-primary-hover: #DC2626;
+  --brand-primary-active: #991B1B;
+  --brand-primary-light: #FEF2F2;
+  --brand-primary-glow: rgba(200, 35, 44, 0.25);
+  
+  --brand-navy-darkest: #050E1A;
+  --brand-navy-dark: #071527;
+  --brand-navy-medium: #0D223F;
+  --brand-navy-surface: #132E54;
+  
   --brand-gold: #D4AF37;
-  --brand-gold-hover: #E5B83B;
-  --brand-blue: #1976D2;
+  --brand-blue: #1E88E5;
 }
 
 /* Sidebar Dark Menu Items */
 .ant-layout-sider {
-  background: #071C3B !important;
+  background: #071527 !important;
 }
 
 .ant-layout-sider .ant-menu-dark {
-  background: #071C3B !important;
+  background: #071527 !important;
 }
 
 .ant-layout-sider .ant-menu-dark .ant-menu-sub {
-  background: #05152E !important;
+  background: #050E1A !important;
 }
 
 .ant-layout-sider .ant-menu-dark .ant-menu-item-selected {
-  background-color: rgba(196, 44, 39, 0.22) !important;
+  background-color: rgba(200, 35, 44, 0.20) !important;
   color: #FFFFFF !important;
   font-weight: 600;
-  border-left: 3px solid #C42C27 !important;
+  border-left: 3px solid #C8232C !important;
 }
 
 .ant-layout-sider .ant-menu-dark .ant-menu-item-selected .anticon {
-  color: #FF5252 !important;
+  color: #F87171 !important;
 }
 
 .ant-layout-sider .ant-menu-dark .ant-menu-item:hover,
 .ant-layout-sider .ant-menu-dark .ant-menu-submenu-title:hover {
-  color: #FF8A80 !important;
+  color: #FCA5A5 !important;
 }
 
 .ant-layout-sider-trigger {
-  background: #05152E !important;
-  color: #FF5252 !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: #050E1A !important;
+  color: #F87171 !important;
+  border-top: 1px solid rgba(200, 35, 44, 0.2) !important;
 }
 
 .ant-layout-sider-trigger:hover {
-  background: #0A244A !important;
+  background: #0D223F !important;
   color: #FFFFFF !important;
 }
 
 /* Primary Button Styling */
 .ant-btn-primary {
-  box-shadow: 0 2px 6px rgba(196, 44, 39, 0.25) !important;
+  box-shadow: 0 2px 6px rgba(200, 35, 44, 0.25) !important;
 }
 
 .ant-btn-primary:not(:disabled):hover {
-  box-shadow: 0 4px 12px rgba(196, 44, 39, 0.35) !important;
+  box-shadow: 0 4px 12px rgba(200, 35, 44, 0.35) !important;
 }

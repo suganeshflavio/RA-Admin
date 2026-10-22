@@ -18,13 +18,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Ramar's Academy",
-  description: "Admin portal for Ramar's Academy - NEET / JEE Physics",
+  description: "Admin Portal - Ramar's Academy",
   icons: {
-    icon: [
-      { url: "/favicon.ico" },
-      { url: "/favicon.png", type: "image/png" },
-    ],
-    apple: [{ url: "/apple-icon.png" }],
+    icon: "/favicon.ico",
+    apple: "/ramars_academy_icon.png",
   },
 };
 
