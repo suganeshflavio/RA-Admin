@@ -22,7 +22,7 @@
     "antd": "^6.4.5",
     "dompurify": "^3.4.14",
     "katex": "^0.18.5",
-    "next": "16.2.9",
+    "next": "^16.4.2",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-mathquill": "^1.0.4",
@@ -35,7 +35,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.9",
+    "eslint-config-next": "^14.2.35",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

@@ -80,6 +80,7 @@ type McqQuestionDraft = {
 type McqFormValues = {
   testName: string;
   marksPerQuestion: number;
+  negativeMarksPerQuestion: number;
   questions: McqQuestionDraft[];
 };
 
@@ -126,6 +127,7 @@ export default function McqModal({
     form.setFieldsValue({
       testName: "",
       marksPerQuestion: 2,
+      negativeMarksPerQuestion: 0,
       questions: [createDefaultQuestion()],
     });
   } else if (!open && wasOpen) {
@@ -136,6 +138,7 @@ export default function McqModal({
     const values = form.getFieldsValue(true) as McqFormValues;
     const testName = String(values.testName ?? "").trim();
     const marksPerQuestion = values.marksPerQuestion ?? 2;
+    const negativeMarksPerQuestion = values.negativeMarksPerQuestion ?? 0;
 
     if (!testName) {
       message.error("Enter a test name before creating the test.");
@@ -165,6 +168,7 @@ export default function McqModal({
       await createTest({
         testName,
         marksPerQuestion,
+        negativeMarksPerQuestion,
         questions: normalizedQuestions,
       }).unwrap();
 
@@ -203,6 +207,7 @@ export default function McqModal({
     const values = form.getFieldsValue(true) as McqFormValues;
     const testName = String(values.testName ?? "").trim();
     const marksPerQuestion = values.marksPerQuestion ?? 2;
+    const negativeMarksPerQuestion = values.negativeMarksPerQuestion ?? 0;
 
     if (!testName) {
       message.error("Enter a test name before importing.");
@@ -247,7 +252,7 @@ export default function McqModal({
       duration: 0,
     });
 
-    const importRequest = importTestFromFile({ testName, marksPerQuestion, fileName }).unwrap();
+    const importRequest = importTestFromFile({ testName, marksPerQuestion, negativeMarksPerQuestion, fileName }).unwrap();
 
     form.resetFields();
     onCancel();
@@ -294,7 +299,7 @@ export default function McqModal({
   const handleNext = async () => {
     try {
       if (step === 0) {
-        await form.validateFields(["testName", "marksPerQuestion"]);
+        await form.validateFields(["testName", "marksPerQuestion", "negativeMarksPerQuestion"]);
         setStep(1);
         return;
       }
@@ -368,6 +373,25 @@ export default function McqModal({
                 rules={[{ required: true, message: "Enter marks" }]}
               >
                 <InputNumber min={1} style={{ width: "100%" }} />
+              </Form.Item>
+
+              <Form.Item
+                label="Negative marks per wrong answer"
+                name="negativeMarksPerQuestion"
+                preserve={true}
+                dependencies={["marksPerQuestion"]}
+                extra="Deducted for each wrong answer. Keep 0 for no negative marking."
+                rules={[
+                  { required: true, message: "Enter negative marks (0 for none)" },
+                  ({ getFieldValue }) => ({
+                    validator: (_, value: number | null) =>
+                      value == null || value <= (getFieldValue("marksPerQuestion") ?? 0)
+                        ? Promise.resolve()
+                        : Promise.reject(new Error("Can't be more than the marks per question")),
+                  }),
+                ]}
+              >
+                <InputNumber min={0} step={0.25} precision={2} style={{ width: "100%" }} />
               </Form.Item>
             </div>
           ) : questionMode === "file" ? (

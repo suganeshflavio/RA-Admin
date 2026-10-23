@@ -17,6 +17,7 @@ export type TestItem = {
   id: string;
   testName?: string;
   marksPerQuestion?: number;
+  negativeMarksPerQuestion?: number;
   createdAt?: string;
   updatedAt?: string;
   questions?: TestQuestion[];
@@ -56,6 +57,7 @@ export type TestAttemptItem = {
   studentEmail?: string;
   status?: string;
   marksPerQuestion?: number;
+  negativeMarksPerQuestion?: number;
   totalQuestions?: number;
   correctAnswers?: number;
   wrongAnswers?: number;
@@ -122,6 +124,7 @@ const unwrapQuestion = (response: unknown): TestQuestion => {
 type TestCreateRequest = {
   testName: string;
   marksPerQuestion?: number;
+  negativeMarksPerQuestion?: number;
   questions?: TestQuestion[];
 };
 
@@ -134,6 +137,7 @@ export type McqImportUploadUrlResponse = {
 export type ImportTestFromFileRequest = {
   testName: string;
   marksPerQuestion: number;
+  negativeMarksPerQuestion: number;
   fileName: string;
 };
 
@@ -158,6 +162,7 @@ const unwrapData = <T,>(response: unknown): T => {
 type TestUpdateRequest = {
   testName?: string;
   marksPerQuestion?: number;
+  negativeMarksPerQuestion?: number;
 };
 
 const unwrapTestsList = (response: unknown): TestsListResponse => {

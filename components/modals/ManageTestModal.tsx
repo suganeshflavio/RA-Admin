@@ -38,6 +38,7 @@ export default function ManageTestModal({ open, testId, onClose }: Props) {
   const [editingTest, setEditingTest] = useState(false);
   const [draftTestName, setDraftTestName] = useState("");
   const [draftMarks, setDraftMarks] = useState(1);
+  const [draftNegativeMarks, setDraftNegativeMarks] = useState(0);
   const [editingQuestionId, setEditingQuestionId] = useState<string | null>(null);
   const [draftQuestion, setDraftQuestion] = useState<Partial<TestQuestion> | null>(null);
   const [loadedTestId, setLoadedTestId] = useState<string | undefined>(undefined);
@@ -46,6 +47,7 @@ export default function ManageTestModal({ open, testId, onClose }: Props) {
     setLoadedTestId(test.id);
     setDraftTestName(test.testName ?? "");
     setDraftMarks(test.marksPerQuestion ?? 1);
+    setDraftNegativeMarks(test.negativeMarksPerQuestion ?? 0);
     setEditingTest(false);
     setEditingQuestionId(null);
     setDraftQuestion(null);
@@ -62,8 +64,16 @@ export default function ManageTestModal({ open, testId, onClose }: Props) {
       return;
     }
 
+    if (draftNegativeMarks > draftMarks) {
+      message.error("Negative marks can't be more than the marks per question.");
+      return;
+    }
+
     try {
-      await updateTest({ id: testId, body: { testName: trimmedName, marksPerQuestion: draftMarks } }).unwrap();
+      await updateTest({
+        id: testId,
+        body: { testName: trimmedName, marksPerQuestion: draftMarks, negativeMarksPerQuestion: draftNegativeMarks },
+      }).unwrap();
       message.success("Test updated successfully.");
       setEditingTest(false);
     } catch (error: unknown) {
@@ -170,12 +180,26 @@ export default function ManageTestModal({ open, testId, onClose }: Props) {
                   onChange={(event) => setDraftTestName(event.target.value)}
                   placeholder="Test name"
                 />
-                <InputNumber
-                  min={1}
-                  value={draftMarks}
-                  onChange={(value) => setDraftMarks(Number(value ?? 1))}
-                  style={{ width: "100%" }}
-                />
+                <div>
+                  <Text type="secondary">Marks per question</Text>
+                  <InputNumber
+                    min={1}
+                    value={draftMarks}
+                    onChange={(value) => setDraftMarks(Number(value ?? 1))}
+                    style={{ width: "100%" }}
+                  />
+                </div>
+                <div>
+                  <Text type="secondary">Negative marks per wrong answer (0 for none)</Text>
+                  <InputNumber
+                    min={0}
+                    step={0.25}
+                    precision={2}
+                    value={draftNegativeMarks}
+                    onChange={(value) => setDraftNegativeMarks(Number(value ?? 0))}
+                    style={{ width: "100%" }}
+                  />
+                </div>
                 <Space>
                   <Button onClick={() => setEditingTest(false)}>Cancel</Button>
                   <Button type="primary" loading={isUpdatingTest} onClick={() => void handleSaveTest()}>
@@ -188,6 +212,12 @@ export default function ManageTestModal({ open, testId, onClose }: Props) {
                 <Text>{test?.testName ?? "Untitled Test"}</Text>
                 <div>
                   <Text type="secondary">Marks per question: {test?.marksPerQuestion ?? 1}</Text>
+                </div>
+                <div>
+                  <Text type="secondary">
+                    Negative marks per wrong answer:{" "}
+                    {test?.negativeMarksPerQuestion ? `−${test.negativeMarksPerQuestion}` : "None"}
+                  </Text>
                 </div>
               </div>
             )}

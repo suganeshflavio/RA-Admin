@@ -280,6 +280,11 @@ export default function TestAttemptsModal({
               <Descriptions.Item label="Wrong">
                 {selectedAttempt.wrongAnswers ?? "-"}
               </Descriptions.Item>
+              <Descriptions.Item label="Negative marking">
+                {selectedAttempt.negativeMarksPerQuestion
+                  ? `−${selectedAttempt.negativeMarksPerQuestion} per wrong answer`
+                  : "None"}
+              </Descriptions.Item>
               <Descriptions.Item label="Marks">
                 {selectedAttempt.obtainedMarks ??
                   selectedAttempt.marksObtained ??
