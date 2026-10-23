@@ -174,7 +174,7 @@ export default function TestAttemptsModal({
       <Modal
         title={testName ? `Attempts for ${testName}` : "Student Attempts"}
         open={open}
-        maskClosable={false}
+        mask={{ closable: false }}
         onCancel={onCancel}
         footer={null}
         width={980}

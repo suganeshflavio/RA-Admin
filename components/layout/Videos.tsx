@@ -513,7 +513,7 @@ export default function Videos() {
         <Modal
           title={editingId ? "Edit Video" : "Add Video"}
           open={open}
-          maskClosable={false}
+          mask={{ closable: false }}
           width={600}
           onCancel={resetModal}
           onOk={() => form.submit()}

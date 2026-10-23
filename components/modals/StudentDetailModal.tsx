@@ -97,7 +97,7 @@ export default function StudentDetailModal({ open, student, onCancel }: Props) {
     <Modal
       title={student ? `${student.name} — Student Profile` : "Student Profile"}
       open={open}
-      maskClosable={false}
+      mask={{ closable: false }}
       onCancel={onCancel}
       footer={null}
       width={920}

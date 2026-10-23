@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Card, Popconfirm, Input, Space, Table, Tag, Typography, message } from "antd";
+import { App, Button, Card, Popconfirm, Input, Space, Table, Tag, Typography } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { DeleteOutlined, EyeOutlined, LinkOutlined, PlusOutlined, SearchOutlined, SettingOutlined } from "@ant-design/icons";
 import { type TestItem, useDeleteTestMutation, useGetTestsQuery } from "@/store/features/testsApi";
@@ -13,6 +13,7 @@ import TestAttemptsModal from "../modals/TestAttemptsModal";
 const { Title, Text } = Typography;
 
 export default function McqTests() {
+  const { message } = App.useApp();
   const [searchText, setSearchText] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);

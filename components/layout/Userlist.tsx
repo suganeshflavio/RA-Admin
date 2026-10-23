@@ -713,7 +713,7 @@ export default function Userlist() {
       <Modal
         title={editingId ? "Edit User" : "Add User"}
         open={open}
-        maskClosable={false}
+        mask={{ closable: false }}
         onCancel={resetModal}
         onOk={() => form.submit()}
         confirmLoading={isCreating || isUpdating || isLoadingUserDetail}
@@ -798,7 +798,7 @@ export default function Userlist() {
         style={{ top: 16 }}
         destroyOnHidden
       >
-        <Space direction="vertical" size={16} style={{ width: "100%" }}>
+        <Space orientation="vertical" size={16} style={{ width: "100%" }}>
           <Input.Search
             allowClear
             placeholder="Search course or video"

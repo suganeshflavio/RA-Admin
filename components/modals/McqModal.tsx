@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import {
+  Alert,
+  App,
   Button,
   Card,
   Divider,
@@ -9,17 +11,61 @@ import {
   Input,
   InputNumber,
   Modal,
+  Segmented,
   Select,
   Space,
   Steps,
   Typography,
-  message,
+  Upload,
 } from "antd";
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import { useCreateTestMutation } from "@/store/features/testsApi";
+import type { UploadProps } from "antd";
+import {
+  DownloadOutlined,
+  FileWordOutlined,
+  LeftOutlined,
+  LoadingOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
+import {
+  type McqImportUploadUrlResponse,
+  useCreateTestMutation,
+  useGetMcqImportUploadUrlMutation,
+  useImportTestFromFileMutation,
+} from "@/store/features/testsApi";
 import RichTextEditor from "../common/RichTextEditor";
 
 const { Text } = Typography;
+
+// Kept in sync with the backend limit in RA-Backend test.validation.ts
+const MAX_IMPORT_BYTES = 5 * 1024 * 1024;
+
+const SAMPLE_DOCX_URL = "/samples/mcq-import-sample.docx";
+
+type QuestionMode = "manual" | "file";
+
+const isDocxFile = (file: { name: string }) => /\.docx$/i.test(file.name);
+
+const getErrorMessage = (error: unknown, fallback: string) => {
+  const data = (error as { data?: { message?: unknown } })?.data;
+
+  if (typeof data?.message === "string") {
+    return data.message;
+  }
+
+  return (error as Error)?.message || fallback;
+};
+
+const uploadFileToStorage = async (presigned: McqImportUploadUrlResponse, file: File) => {
+  const response = await fetch(presigned.uploadUrl, {
+    method: "POST",
+    headers: presigned.headers,
+    body: file,
+  });
+
+  if (!response.ok) {
+    throw new Error("File upload failed. Please try again.");
+  }
+};
 
 type McqQuestionDraft = {
   question: string;
@@ -58,16 +104,24 @@ export default function McqModal({
   onCancel,
   onSave,
 }: Props) {
+  const { message, notification } = App.useApp();
   const [form] = Form.useForm<McqFormValues>();
   const [createTest, { isLoading: isCreating }] = useCreateTestMutation();
+  const [getMcqImportUploadUrl] = useGetMcqImportUploadUrlMutation();
+  const [importTestFromFile] = useImportTestFromFileMutation();
   const [step, setStep] = useState(0);
   const [wasOpen, setWasOpen] = useState(false);
+  const [questionMode, setQuestionMode] = useState<QuestionMode>("manual");
+  const [importFile, setImportFile] = useState<File | null>(null);
+  const [isUploadingFile, setIsUploadingFile] = useState(false);
 
   const questions = Form.useWatch("questions", form) ?? [];
 
   if (open && !wasOpen) {
     setWasOpen(true);
     setStep(0);
+    setQuestionMode("manual");
+    setImportFile(null);
     form.resetFields();
     form.setFieldsValue({
       testName: "",
@@ -123,6 +177,120 @@ export default function McqModal({
     }
   };
 
+  const handleFileSelect: UploadProps["beforeUpload"] = (file) => {
+    if (/\.doc$/i.test(file.name)) {
+      message.error("Old .doc files can't be read. Open it in Word and save it as .docx.");
+      return Upload.LIST_IGNORE;
+    }
+
+    if (!isDocxFile(file)) {
+      message.error("Only Word (.docx) files can be imported.");
+      return Upload.LIST_IGNORE;
+    }
+
+    if (file.size > MAX_IMPORT_BYTES) {
+      message.error("File must be 5 MB or smaller.");
+      return Upload.LIST_IGNORE;
+    }
+
+    setImportFile(file);
+
+    // upload happens on "Import Test", not on select
+    return false;
+  };
+
+  const handleImport = async () => {
+    const values = form.getFieldsValue(true) as McqFormValues;
+    const testName = String(values.testName ?? "").trim();
+    const marksPerQuestion = values.marksPerQuestion ?? 2;
+
+    if (!testName) {
+      message.error("Enter a test name before importing.");
+      return;
+    }
+
+    if (!importFile) {
+      message.error("Choose a Word (.docx) file to import.");
+      return;
+    }
+
+    let fileName: string;
+
+    try {
+      setIsUploadingFile(true);
+
+      const presigned = await getMcqImportUploadUrl({
+        fileName: importFile.name,
+        fileSize: importFile.size,
+      }).unwrap();
+
+      await uploadFileToStorage(presigned, importFile);
+
+      fileName = presigned.fileName;
+    } catch (error: unknown) {
+      message.error(getErrorMessage(error, "Unable to upload the file."));
+      return;
+    } finally {
+      setIsUploadingFile(false);
+    }
+
+    // Close the modal and report back through a notification that stays until
+    // the admin dismisses it, so they can keep working meanwhile.
+    const notificationKey = `mcq-import-${Date.now()}`;
+    const sourceName = importFile.name;
+
+    notification.info({
+      key: notificationKey,
+      icon: <LoadingOutlined />,
+      title: "Importing MCQ test",
+      description: `Reading questions from "${sourceName}". You'll be notified here when it's done.`,
+      duration: 0,
+    });
+
+    const importRequest = importTestFromFile({ testName, marksPerQuestion, fileName }).unwrap();
+
+    form.resetFields();
+    onCancel();
+
+    try {
+      const result = await importRequest;
+
+      notification.success({
+        key: notificationKey,
+        title: "MCQ test imported",
+        description: (
+          <Space orientation="vertical" size={4}>
+            <Text>
+              {result.importedCount} question{result.importedCount === 1 ? "" : "s"} added to &quot;{testName}&quot;.
+              Review them in Manage before linking the test.
+            </Text>
+            {result.warnings.length > 0 ? (
+              <>
+                <Text type="warning">Please check:</Text>
+                <ul style={{ margin: 0, paddingLeft: 18 }}>
+                  {result.warnings.map((warning) => (
+                    <li key={warning}>
+                      <Text type="secondary">{warning}</Text>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : null}
+          </Space>
+        ),
+        duration: 0,
+      });
+      onSave?.(values);
+    } catch (error: unknown) {
+      notification.error({
+        key: notificationKey,
+        title: "Import failed",
+        description: `${sourceName}: ${getErrorMessage(error, "Unable to import questions from this file.")}`,
+        duration: 0,
+      });
+    }
+  };
+
   const handleNext = async () => {
     try {
       if (step === 0) {
@@ -148,7 +316,7 @@ export default function McqModal({
     <Modal
       title="Create MCQ Test"
       open={open}
-      maskClosable={false}
+      mask={{ closable: false }}
       onCancel={() => {
         form.resetFields();
         onCancel();
@@ -157,12 +325,23 @@ export default function McqModal({
       footer={null}
       destroyOnHidden
     >
-      <Space direction="vertical" size="large" style={{ width: "100%" }}>
+      <Space orientation="vertical" size="large" style={{ width: "100%" }}>
         <Steps
           current={step}
           size="small"
           items={[{ title: "Test details" }, { title: "Questions" }]}
         />
+
+        {step === 1 ? (
+          <Segmented<QuestionMode>
+            value={questionMode}
+            onChange={setQuestionMode}
+            options={[
+              { label: "Add manually", value: "manual" },
+              { label: "Import Word file", value: "file" },
+            ]}
+          />
+        ) : null}
 
         <Form form={form} layout="vertical" preserve={true}>
           {step === 0 ? (
@@ -191,6 +370,47 @@ export default function McqModal({
                 <InputNumber min={1} style={{ width: "100%" }} />
               </Form.Item>
             </div>
+          ) : questionMode === "file" ? (
+            <Space orientation="vertical" size="middle" style={{ width: "100%" }}>
+              <Alert
+                type="info"
+                showIcon
+                title="Import questions, options A–D, answers and explanations from a Word file"
+                description={
+                  <Space orientation="vertical" size={4}>
+                    <Text>
+                      Follow the sample template. Equations made with Word&apos;s equation tool (Insert → Equation)
+                      and inserted pictures are imported exactly. Review the questions in Manage once the import
+                      finishes.
+                    </Text>
+                    <a href={SAMPLE_DOCX_URL} download>
+                      <DownloadOutlined /> Download sample Word template
+                    </a>
+                  </Space>
+                }
+              />
+              <Upload.Dragger
+                accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                maxCount={1}
+                beforeUpload={handleFileSelect}
+                fileList={
+                  importFile
+                    ? [{ uid: "mcq-import-file", name: importFile.name, size: importFile.size, status: "done" }]
+                    : []
+                }
+                onRemove={() => {
+                  setImportFile(null);
+                  return true;
+                }}
+                disabled={isUploadingFile}
+              >
+                <p className="ant-upload-drag-icon">
+                  <FileWordOutlined />
+                </p>
+                <p className="ant-upload-text">Click or drag a Word (.docx) file here</p>
+                <p className="ant-upload-hint">Up to 5 MB and 100 questions</p>
+              </Upload.Dragger>
+            </Space>
           ) : (
             <Form.List name="questions">
               {(fields, { add, remove }) => (
@@ -344,6 +564,15 @@ export default function McqModal({
             {step === 0 ? (
               <Button type="primary" onClick={handleNext}>
                 Next <RightOutlined />
+              </Button>
+            ) : questionMode === "file" ? (
+              <Button
+                type="primary"
+                loading={isUploadingFile}
+                disabled={!importFile}
+                onClick={() => void handleImport()}
+              >
+                {isUploadingFile ? "Uploading file" : "Import Test"}
               </Button>
             ) : (
               <Button

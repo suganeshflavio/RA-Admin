@@ -154,7 +154,7 @@ export default function TopicContentModal({ open, topicId, topicName, onClose }:
       destroyOnHidden
     >
       {!topicId ? null : (
-        <Space direction="vertical" size="large" style={{ width: "100%" }} styles={{ item: { width: "100%" } }}>
+        <Space orientation="vertical" size="large" style={{ width: "100%" }} styles={{ item: { width: "100%" } }}>
           <LinkSection
             title="Videos"
             linked={linkedVideos}

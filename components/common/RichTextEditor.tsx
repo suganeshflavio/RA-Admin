@@ -224,7 +224,7 @@ export default function RichTextEditor({ value, onChange, placeholder, minHeight
             x₂
           </Button>
 
-          <Divider type="vertical" style={{ margin: "0 4px" }} />
+          <Divider orientation="vertical" style={{ margin: "0 4px" }} />
 
           <Button
             size="small"

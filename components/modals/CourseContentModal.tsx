@@ -331,7 +331,7 @@ export default function CourseContentModal({ open, courseId, courseName, onClose
       destroyOnHidden
     >
       {!courseId ? null : (
-        <Space direction="vertical" size="large" style={{ width: "100%" }} styles={{ item: { width: "100%" } }}>
+        <Space orientation="vertical" size="large" style={{ width: "100%" }} styles={{ item: { width: "100%" } }}>
           <TopicLinkSection
             linked={course?.topics ?? []}
             subjectOptions={subjectOptions}

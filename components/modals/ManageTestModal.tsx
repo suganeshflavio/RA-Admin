@@ -141,7 +141,7 @@ export default function ManageTestModal({ open, testId, onClose }: Props) {
     <Modal
       title={test?.testName ? `Manage "${test.testName}"` : "Manage Test"}
       open={open}
-      maskClosable={false}
+      mask={{ closable: false }}
       onCancel={onClose}
       footer={<Button onClick={onClose}>Close</Button>}
       width={840}

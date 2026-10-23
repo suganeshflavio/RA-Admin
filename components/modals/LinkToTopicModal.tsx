@@ -75,7 +75,7 @@ export default function LinkToTopicModal({ open, kind, entityId, entityLabel, on
       okButtonProps={{ disabled: !selectedTopicId, loading: isLinking }}
       destroyOnHidden
     >
-      <Space direction="vertical" style={{ width: "100%" }}>
+      <Space orientation="vertical" style={{ width: "100%" }}>
         <Text type="secondary">
           A {KIND_LABEL[kind]} can be linked to any number of topics — this doesn&apos;t remove it from topics it&apos;s
           already linked to.

@@ -125,6 +125,36 @@ type TestCreateRequest = {
   questions?: TestQuestion[];
 };
 
+export type McqImportUploadUrlResponse = {
+  uploadUrl: string;
+  fileName: string;
+  headers: Record<string, string>;
+};
+
+export type ImportTestFromFileRequest = {
+  testName: string;
+  marksPerQuestion: number;
+  fileName: string;
+};
+
+export type ImportTestFromFileResponse = {
+  test: TestItem;
+  importedCount: number;
+  warnings: string[];
+};
+
+const unwrapData = <T,>(response: unknown): T => {
+  if (response && typeof response === "object" && !Array.isArray(response)) {
+    const data = (response as Record<string, unknown>).data;
+
+    if (data && typeof data === "object" && !Array.isArray(data)) {
+      return data as T;
+    }
+  }
+
+  return response as T;
+};
+
 type TestUpdateRequest = {
   testName?: string;
   marksPerQuestion?: number;
@@ -206,6 +236,23 @@ export const testsApi = appApi.injectEndpoints({
         body,
       }),
       transformResponse: unwrapTest,
+      invalidatesTags: [{ type: "Test", id: "LIST" }],
+    }),
+    getMcqImportUploadUrl: builder.mutation<McqImportUploadUrlResponse, { fileName: string; fileSize: number }>({
+      query: (body) => ({
+        url: "/tests/import/upload-url",
+        method: "POST",
+        body,
+      }),
+      transformResponse: unwrapData<McqImportUploadUrlResponse>,
+    }),
+    importTestFromFile: builder.mutation<ImportTestFromFileResponse, ImportTestFromFileRequest>({
+      query: (body) => ({
+        url: "/tests/import",
+        method: "POST",
+        body,
+      }),
+      transformResponse: unwrapData<ImportTestFromFileResponse>,
       invalidatesTags: [{ type: "Test", id: "LIST" }],
     }),
     getTestAttempts: builder.query<TestAttemptsListResponse, TestAttemptsQueryParams | typeof skipToken>({
@@ -290,6 +337,8 @@ export const testsApi = appApi.injectEndpoints({
 export const {
   useGetTestsQuery,
   useCreateTestMutation,
+  useGetMcqImportUploadUrlMutation,
+  useImportTestFromFileMutation,
   useGetTestAttemptsQuery,
   useGetTestByIdQuery,
   useUpdateTestMutation,

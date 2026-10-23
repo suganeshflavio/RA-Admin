@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ConfigProvider } from "antd";
+import { App, ConfigProvider } from "antd";
 
 export default function ThemeConfigProvider({
   children,
@@ -64,7 +64,8 @@ export default function ThemeConfigProvider({
         },
       }}
     >
-      {children}
+      {/* provides theme-aware message/notification/modal via App.useApp() */}
+      <App component={false}>{children}</App>
     </ConfigProvider>
   );
 }

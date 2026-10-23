@@ -386,7 +386,7 @@ export default function Notes() {
         <Modal
           title={editingId ? "Edit Notes" : "Add Notes"}
           open={open}
-          maskClosable={false}
+          mask={{ closable: false }}
           onCancel={resetModal}
           onOk={() => form.submit()}
           confirmLoading={isCreating || isUpdating || isLoadingNotesDetail}
